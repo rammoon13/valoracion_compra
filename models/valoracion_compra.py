@@ -1,5 +1,5 @@
 # valoracion_compra/models/valoracion_compra.py
-from odoo import models, fields
+from odoo import models, fields, api
 
 class ValoracionCompra(models.Model):
     _name = 'valoracion.compra'
@@ -10,6 +10,19 @@ class ValoracionCompra(models.Model):
     fecha_compra = fields.Date(string="Fecha de la Compra", required=True)
     comentario = fields.Text(string="Comentario sobre el desempeño", required=True)
     linea_ids = fields.One2many('valoracion.compra.line', 'compra_id', string="Artículos Vendidos")
+
+    @api.onchange('empresa')
+    def _onchange_empresa(self):
+        """Actualizar automáticamente algún campo relacionado con la empresa si es necesario"""
+        if self.empresa:
+            self.comentario = f"Valoración de la compra para {self.empresa.name}"
+
+    @api.model
+    def create(self, vals):
+        """Este método se ejecuta al crear un nuevo registro de valoración"""
+        record = super(ValoracionCompra, self).create(vals)
+        return record
+
 
 class ValoracionCompraLine(models.Model):
     _name = 'valoracion.compra.line'
