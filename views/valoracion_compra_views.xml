@@ -1,0 +1,54 @@
+<!-- valoracion_compra/views/valoracion_compra_views.xml-->
+<odoo>
+    <!-- Vista Formulario -->
+    <record id="view_valoracion_compra_form" model="ir.ui.view">
+        <field name="name">valoracion.compra.form</field>
+        <field name="model">valoracion.compra</field>
+        <field name="arch" type="xml">
+            <form string="Valoración de Compra">
+                <sheet>
+                    <group>
+                        <field name="trabajador"/>
+                        <field name="empresa"/>
+                        <field name="fecha_compra"/>
+                    </group>
+                    <group>
+                        <field name="comentario"/>
+                    </group>
+                    <group>
+                        <field name="linea_ids">
+                            <tree editable="bottom">
+                                <field name="producto"/>
+                                <field name="cantidad"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Árbol -->
+    <record id="view_valoracion_compra_tree" model="ir.ui.view">
+        <field name="name">valoracion.compra.tree</field>
+        <field name="model">valoracion.compra</field>
+        <field name="arch" type="xml">
+            <tree string="Valoraciones de Compra">
+                <field name="trabajador"/>
+                <field name="empresa"/>
+                <field name="fecha_compra"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de ventana -->
+    <record id="action_valoracion_compra" model="ir.actions.act_window">
+        <field name="name">Valoraciones de Compra</field>
+        <field name="res_model">valoracion.compra</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menús -->
+    <menuitem id="menu_valoracion_compra_root" name="Valoración de Compra" sequence="10"/>
+    <menuitem id="menu_valoracion_compra" name="Valoraciones" parent="menu_valoracion_compra_root" action="action_valoracion_compra" sequence="10"/>
+</odoo>
